@@ -7,7 +7,7 @@ sudo apt full-upgrade -y
 
 sudo apt autoremove -y && sudo apt autoclean
 
-sudo apt install -y curl wget git htop ufw net-tools software-properties-common
+sudo apt install -y curl wget git htop ufw net-tools software-properties-common fail2ban
 
 sudo timedatectl set-timezone America/Sao_Paulo
 
