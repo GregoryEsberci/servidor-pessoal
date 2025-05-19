@@ -13,3 +13,10 @@ hs() {
 alias myip='
 echo "IP local: "`hostname -I | cut -d " " -f 1`
 echo "IP remoto: "`curl -s ifconfig.me`'
+
+# nano
+alias nano-clean='f() { : > "$1" && nano "$1"; }; f'
+
+# docker compose
+alias dc-up="docker compose up -d"
+alias dc-down="docker compose down"
