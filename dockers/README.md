@@ -2,7 +2,7 @@
 
 Este documento descreve as portas utilizadas por serviços em containers Docker, seguindo uma convenção interna para evitar conflitos.
 
-## Padrão de portas: `9xxy`
+## Padrão de portas: `9yxx`
 
 - `xx`: identificador único por `docker-compose.yml` (projeto).
 - `y`: identificador único por serviço dentro do projeto.
@@ -12,4 +12,5 @@ Este documento descreve as portas utilizadas por serviços em containers Docker,
 | **Serviço**   | **Porta** |
 |---------------|-----------|
 | Portainer     | 9000      |
-| qBittorrent   | 9010      |
+| qBittorrent   | 9001      |
+| Jackett       | 9101      |
