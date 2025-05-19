@@ -7,9 +7,9 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Sao_Paulo
-      - WEBUI_PORT=8181
+      - WEBUI_PORT=9010
     volumes:
       - ./data/config:/config
       - /mnt/hdd/data/torrents:/downloads
     ports:
-      - "9100:8181"
+      - "9010:9010"
