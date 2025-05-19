@@ -1,0 +1,15 @@
+services:
+  qbittorrent:
+    image: linuxserver/qbittorrent
+    container_name: qbittorrent
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo
+      - WEBUI_PORT=8181
+    volumes:
+      - ./data/config:/config
+      - /mnt/hdd/data/torrents:/downloads
+    ports:
+      - "9100:8181"
