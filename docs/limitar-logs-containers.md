@@ -1,4 +1,4 @@
-# Configure para limitar logs dos containers
+# Limitar logs dos containers
 
 ## Abre o arquivo
 

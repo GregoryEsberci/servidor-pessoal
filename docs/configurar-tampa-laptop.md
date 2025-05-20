@@ -1,12 +1,12 @@
-# Configurar o laptop para não suspender ao fechar a tampa
+# Evitar suspensão ao fechar a tampa do laptop
 
-Edite o arquivo `/etc/systemd/logind.conf`:
+## Editar logind.conf
 
 ```sh
 sudo nano /etc/systemd/logind.conf
 ```
 
-Altere as seguintes regras
+## Alterar comportamentos ao fechar a tampa
 
 ```ini
 HandleLidSwitch=ignore
@@ -15,5 +15,5 @@ HandleLidSwitchExternalPower=ignore
 
 ## O que faz
 
-- `HandleLidSwitch=ignore`: Não faz nada ao fechar a tampa **na bateria**
-- `HandleLidSwitchExternalPower=ignore`: Não faz nada ao fechar a tampa **na tomada**
+* `HandleLidSwitch=ignore`: ignora o fechamento da tampa na **bateria**
+* `HandleLidSwitchExternalPower=ignore`: ignora o fechamento da tampa na **tomada**

@@ -1,4 +1,4 @@
-# Configuração de HD
+# Configurar HD secundário
 
 ## **1. Identificação do HD**
 
