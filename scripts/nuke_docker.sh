@@ -1,6 +1,8 @@
 #!/bin/bash
 
-bash -c 'cat << "EOF"
+source "$(dirname "$0")/setup.sh"
+
+cat << "EOF"
 
 === ATENÇÃO ===
 ESTE SCRIPT VAI REMOVER *TUDO* DO DOCKER:
@@ -19,7 +21,7 @@ if [[ "$resposta" != "EXCLUIR" ]]; then
     exit 1
 fi
 
-echo "Limpando TUDO do Docker..."
+log "Limpando TUDO do Docker..."
 docker stop $(docker ps -aq) 2>/dev/null
 docker rm -fv $(docker ps -aq) 2>/dev/null
 docker rmi -f $(docker images -aq) 2>/dev/null
@@ -28,6 +30,7 @@ docker network prune -f 2>/dev/null
 docker builder prune -af 2>/dev/null
 docker system prune -af --volumes 2>/dev/null
 
-echo -e "\n=== VERIFICAÇÃO FINAL ==="
+echo ""
+log "=== VERIFICAÇÃO FINAL ==="
 docker system df
-echo -e "\nPronto! Docker resetado para o estado inicial."'
+log  "Pronto! Docker resetado para o estado inicial."
