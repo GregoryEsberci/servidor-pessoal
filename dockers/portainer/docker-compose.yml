@@ -2,6 +2,8 @@ services:
   portainer:
     image: portainer/portainer-ee:latest
     container_name: portainer
+    environment:
+      - TZ=${TZ}
     ports:
       - "9000:9000"
     volumes:

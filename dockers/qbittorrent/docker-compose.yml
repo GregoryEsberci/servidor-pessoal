@@ -4,9 +4,9 @@ services:
     container_name: qbittorrent
     restart: unless-stopped
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Sao_Paulo
+      - PUID=${PUID}
+      - PGID=${PUID}
+      - TZ=${TZ}
       - WEBUI_PORT=9001
     volumes:
       - ./data/qbittorrent/config:/config

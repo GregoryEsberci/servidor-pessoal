@@ -6,7 +6,7 @@ alias ..='cd ..'
 
 # Busca de comandos
 hs() {
-    history | grep "$1" | awk '{$1=""; print substr($0,2)}' | grep -v '^hs ' | grep "$1"
+  history | grep "$1" | awk '{$1=""; print substr($0,2)}' | grep -v '^hs ' | grep "$1"
 }
 
 # IP
@@ -18,5 +18,5 @@ echo "IP remoto: "`curl -s ifconfig.me`'
 alias nano-clean='f() { : > "$1" && nano "$1"; }; f'
 
 # docker compose
-alias dc-up="docker compose up -d"
-alias dc-down="docker compose down"
+alias up="./scripts/up.sh"
+alias down="./scripts/down.sh"
