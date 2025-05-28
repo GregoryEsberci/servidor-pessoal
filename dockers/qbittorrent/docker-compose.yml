@@ -10,13 +10,13 @@ services:
       - WEBUI_PORT=9001
     volumes:
       - ./data/qbittorrent/config:/config
-      - /mnt/hdd/data/torrents:/downloads
+      - /mnt/hdd/public/data/torrents:/downloads
     ports:
       - "9001:9001"
     depends_on:
       - qbittorrent-jackett
     networks:
-      - qbittorrent_network
+      - proxy_network
 
   qbittorrent-jackett:
     image: lscr.io/linuxserver/jackett
@@ -29,10 +29,10 @@ services:
       - ./data/jackett/config:/config
     restart: unless-stopped
     ports:
-      - "9101:9117"
+      - "9101:9101"
     networks:
-      - qbittorrent_network
+      - proxy_network
 
 networks:
-  qbittorrent_network:
-    driver: bridge
+  proxy_network:
+    external: true

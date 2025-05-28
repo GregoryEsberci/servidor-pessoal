@@ -15,3 +15,4 @@ Este documento descreve as portas utilizadas por serviços em containers Docker,
 | qBittorrent   | 9001      |
 | Jackett       | 9101      |
 | Homepage      | 80        |
+| Nextcloud     | 9002      |

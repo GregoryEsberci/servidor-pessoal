@@ -44,12 +44,28 @@ sudo apt install -y unattended-upgrades
 sudo dpkg-reconfigure unattended-upgrades
 ```
 
+## Criar usuario "midias"
+
+Ele é usado por alguns conteiners
+
+```sh
+sudo adduser midias
+```
+
+## Configurar atalhos do .bashrc
+
+```sh
+printf '\n' >> ~/.bashrc
+printf 'bind '\''"\\e[A": history-search-backward'\''  # Seta ↑ busca histórico\n' >> ~/.bashrc
+printf 'bind '\''"\\e[B": history-search-forward'\''   # Seta ↓ continua busca\n' >> ~/.bashrc
+```
+
 ## Próximos passos
 
-- [configurar-docker-compose.md](https://github.com/GregoryEsberci/servidor-pessoal/blob/main/docs/configurar-docker-compose.md)
+- [Configurar Docker e Docker Compose v2](https://github.com/GregoryEsberci/servidor-pessoal/blob/main/docs/configurar-docker-compose.md)
 
-- [limitar-logs-containers.md](https://github.com/GregoryEsberci/servidor-pessoal/blob/main/docs/limitar-logs-containers.md)
+- [Limitar logs dos containers](https://github.com/GregoryEsberci/servidor-pessoal/blob/main/docs/limitar-logs-containers.md)
 
-- [configurar-git.md](https://github.com/GregoryEsberci/servidor-pessoal/blob/main/docs/configurar-git.md)
+- [Configurar Git](https://github.com/GregoryEsberci/servidor-pessoal/blob/main/docs/configurar-git.md)
 
-- [configurar-ssh.md](https://github.com/GregoryEsberci/servidor-pessoal/blob/main/docs/configurar-ssh.md)
+- [Configurar SSH](https://github.com/GregoryEsberci/servidor-pessoal/blob/main/docs/configurar-ssh.md)

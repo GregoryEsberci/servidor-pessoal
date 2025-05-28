@@ -10,13 +10,13 @@ git config --global user.name "<nick_GitHub>"
 ## Gerar chave SSH (se ainda não tiver)
 
 ```sh
-ssh-keygen -t rsa -b 4096 -C "<email>"
+ssh-keygen -t Ed25519 -C "<email>"
 ```
 
 ## Copiar chave pública
 
 ```sh
-cat ~/.ssh/id_rsa.pub
+cat ~/.ssh/id_ed25519.pub
 
 # Usar output em https://github.com/settings/keys
 ```

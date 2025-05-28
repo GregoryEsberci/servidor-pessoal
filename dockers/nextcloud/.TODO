@@ -1,0 +1,1 @@
+O upload/download está ficando limitado a 10mb/s por algum motivo, PHP_UPLOAD_LIMIT=16G não resolveu
