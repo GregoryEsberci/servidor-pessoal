@@ -14,3 +14,4 @@ Este documento descreve as portas utilizadas por serviços em containers Docker,
 | Portainer     | 9000      |
 | qBittorrent   | 9001      |
 | Jackett       | 9101      |
+| Homepage      | 80        |

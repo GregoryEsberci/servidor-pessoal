@@ -1,0 +1,18 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - 80:3000
+    volumes:
+      - ./data/config:/app/config
+      - /mnt/hdd:/mnt/hdd
+    environment:
+      - HOMEPAGE_ALLOWED_HOSTS=${HOMEPAGE_ALLOWED_HOSTS}
+      - TZ=${TZ}
+    networks:
+      - proxy_network
+
+networks:
+  proxy_network:
+    external: true
