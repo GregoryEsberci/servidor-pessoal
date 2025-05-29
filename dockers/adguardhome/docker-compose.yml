@@ -1,0 +1,18 @@
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 9003:80
+      # - 9103:3000 # Apenas pra config inicial
+    volumes:
+      - ./data/config:/opt/adguardhome/conf
+      - ./data/work:/opt/adguardhome/work
+    networks:
+      - proxy_network
+
+networks:
+  proxy_network:
+    external: true

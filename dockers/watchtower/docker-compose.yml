@@ -4,7 +4,7 @@ services:
     container_name: watchtower
     environment:
       - TZ=${TZ}
-      - WATCHTOWER_SCHEDULE=0 0 3 * * *
+      - WATCHTOWER_SCHEDULE=0 0 5 * * *
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_ROLLING_RESTART=true
       - WATCHTOWER_LIFECYCLE_HOOKS=true

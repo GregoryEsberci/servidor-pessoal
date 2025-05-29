@@ -55,4 +55,3 @@ networks:
   nextcloud_network:
   proxy_network:
     external: true
-
