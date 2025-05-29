@@ -8,11 +8,37 @@ services:
       - 9003:80
       # - 9103:3000 # Apenas pra config inicial
     volumes:
-      - ./data/config:/opt/adguardhome/conf
-      - ./data/work:/opt/adguardhome/work
+      - ./data/adguardhome/config:/opt/adguardhome/conf
+      - ./data/adguardhome/work:/opt/adguardhome/work
     networks:
-      - proxy_network
+      dns_network:
+          ipv4_address: 172.28.0.11
+      proxy_network:
+        
+    restart: unless-stopped
+    depends_on:
+      - adguardhome-unbound
+
+  adguardhome-unbound:
+    image: mvance/unbound:latest
+    container_name: adguardhome-unbound
+    volumes:
+      - ./data/unbound:/opt/unbound/etc/unbound/
+    restart: unless-stopped
+    ports:
+      - 5053:53/tcp
+      - 5053:53/udp
+    networks:
+      dns_network:
+        ipv4_address: 172.28.0.10 # usar esse ip no AdGuard
+    healthcheck:
+      test: ["NONE"]
 
 networks:
+  dns_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
   proxy_network:
     external: true
