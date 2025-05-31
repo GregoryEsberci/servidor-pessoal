@@ -10,9 +10,3 @@ services:
     ports:
       - "9002:80"
     user: "${PUID}:${PGID}"
-    networks:
-      - proxy_network
-
-networks:
-  proxy_network:
-    external: true

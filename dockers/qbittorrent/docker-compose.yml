@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     environment:
       - PUID=${PUID}
-      - PGID=${PUID}
+      - PGID=${PGID}
       - TZ=${TZ}
       - WEBUI_PORT=9001
     volumes:
@@ -13,26 +13,15 @@ services:
       - /mnt/hdd/public/data/torrents:/downloads
     ports:
       - "9001:9001"
-    depends_on:
-      - qbittorrent-jackett
-    networks:
-      - proxy_network
 
-  qbittorrent-jackett:
-    image: lscr.io/linuxserver/jackett
-    container_name: qbittorrent-jackett
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - AUTO_UPDATE=true
-    volumes:
-      - ./data/jackett/config:/config
-    restart: unless-stopped
-    ports:
-      - "9101:9101"
-    networks:
-      - proxy_network
-
-networks:
-  proxy_network:
-    external: true
+# Realmente vale a pena? acho q n vale o tempo de manutenção
+  # qbittorrent-jackett:
+  #   image: lscr.io/linuxserver/jackett
+  #   container_name: qbittorrent-jackett
+  #   environment:
+  #     - AUTO_UPDATE=true
+  #   volumes:
+  #     - ./data/jackett/config:/config
+  #   restart: unless-stopped
+  #   ports:
+  #     - "9101:9101"

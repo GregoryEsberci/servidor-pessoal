@@ -13,7 +13,6 @@ Este documento descreve as portas utilizadas por serviços em containers Docker,
 |---------------------|-----------|
 | Portainer           | 9000      |
 | qBittorrent         | 9001      |
-| Jackett             | 9101      |
 | Homepage            | 80        |
-| Nextcloud           | 9002      |
+| Filebrowser         | 9002      |
 | AdGuard Home        | 9003      |
