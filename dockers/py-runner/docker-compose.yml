@@ -1,0 +1,13 @@
+services:
+  py-runner:
+    build: .
+    user: "${CURRENT_UID:-1000}:${CURRENT_GID:-1000}"
+    volumes:
+      - ./scripts-py:/app/scripts-py:ro
+      - ./data/configs:/app/configs:ro
+      - /mnt/hdd/:/mnt/hdd
+      - /home/gregory/servidor-pessoal:/home/gregory/servidor-pessoal
+    environment:
+      - SCRIPT_TO_RUN
+      - EXEC_PWD
+    restart: "no"

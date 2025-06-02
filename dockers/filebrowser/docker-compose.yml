@@ -4,7 +4,7 @@ services:
     container_name: filebrowser
     restart: unless-stopped
     volumes:
-      - /mnt/hdd/data:/srv
+      - /mnt/hdd/public/data:/srv
       - ./data/filebrowser.db:/filebrowser.db
       - ./data/filebrowser.json:/.filebrowser.json
     ports:

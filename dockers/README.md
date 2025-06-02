@@ -16,3 +16,4 @@ Este documento descreve as portas utilizadas por serviços em containers Docker,
 | Homepage            | 80        |
 | Filebrowser         | 9002      |
 | AdGuard Home        | 9003      |
+| jellyfin            | 9004      |
