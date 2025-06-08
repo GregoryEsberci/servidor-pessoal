@@ -2,18 +2,13 @@
 
 service_dir=$(realpath "$(dirname "${BASH_SOURCE[0]}")/..")
 script="$1"
-user="$2"
+user="${2:-$(id -nu)}" # $2 || usuário atual (id -nu)
 
-print_scripts() { 
+print_scripts() {
   echo
-  echo "Scripts disponiveis:"
+  echo "Scripts disponíveis:"
   find "$service_dir/scripts-py/" -maxdepth 1 -mindepth 1 -type d -printf '%f\n'
 }
-
-if [[ "$EUID" -ne 0 ]]; then
-  echo "Execute como root"
-  exit 1
-fi
 
 if [ -z "$script" ]; then
   echo "Uso: $0 <script> <usuario>"

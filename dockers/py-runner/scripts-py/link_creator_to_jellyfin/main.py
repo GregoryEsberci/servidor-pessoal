@@ -11,21 +11,8 @@ SUBTITLE_EXTENSIONS = ['.srt', '.sub', '.ass']
 MIN_FILE_SIZE = 100 * 1024 * 1024 # 100 MB
 
 SEARCH_DIR = Path('/mnt/hdd/public/data/torrents')
-FILE_NAME_BLACKLIST = [
-  '1080p',
-  '720p',
-  'DUAL',
-  'WEB-DL',
-  'WEB',
-  'DDP5.1',
-  '5.1',
-  'COMANDOTORENTS',
-  'x264',
-]
 
 target_dir = Path(os.environ["EXEC_PWD"])
-
-FILE_NAME_BLACKLIST_PATTERN = re.compile('|'.join(map(re.escape, FILE_NAME_BLACKLIST)))
 
 def is_video_file(path):
   return path.suffix.lower() in VIDEO_EXTENSIONS
@@ -49,17 +36,27 @@ def find_matching_dirs(base_dir, search_term):
         matches.append(Path(root) / d)
   return matches
 
-def file_name_suggestion(file_name):
+def extract_episode_code(filename):
+    # SnnEnn, ex: S01E03, S01E01
+    pattern = r'S\d{2}E\d{2}'
+    match = re.search(pattern, filename)
+
+    if match:
+        return match.group()
+    return None
+
+def file_name_suggestion(file_name, serie_name):
   name_base, extension = os.path.splitext(file_name)
 
-  # São poucos casos onde a sugestão fica 100%, mas não é viavel cobrir todos os casos, 
-  # melhor fazer o ajuste fino caso a caso 
-  cleaned_name = FILE_NAME_BLACKLIST_PATTERN.sub('', name_base).replace('.', ' ')
   
-  return f'{" ".join(cleaned_name.split())}{extension}'
+  episode_code = extract_episode_code(name_base)
+
+  return f"{serie_name} {episode_code}{extension}"
 
 def main():
   search_term = input("Buscar por: ").strip()
+  print(f"Pressione enter para usar \"{search_term}\" ou insira um valor")
+  serie_name = input("Nome da serie: ").strip() or search_term
 
   if len(search_term) < 2:
     print("Input invalido")
@@ -85,7 +82,7 @@ def main():
         if is_video and not file_is_valid(file):
           continue
 
-        name_suggestion = file_name_suggestion(file.name)
+        name_suggestion = file_name_suggestion(file.name, serie_name)
 
         print(f"\nEncontrado: {file.name}\nSugestão:   {name_suggestion}")
         print("Pressione enter para aceitar a sugestão, digite _next pra ignorar ou insira o nome")

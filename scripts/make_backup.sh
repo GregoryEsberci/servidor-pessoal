@@ -16,8 +16,9 @@ exec > >(
   done | tee "$log_file"
 ) 2>&1
 
-backup_time=$(date +%d-%m-%Y_%H-%M-%S)
-formatted_time=$(date "+%d/%m/%Y %H:%M:%S")
+timestamp=$(date +%s)
+backup_time=$(date -d @"$timestamp" +%d-%m-%Y_%H-%M-%S)
+formatted_time=$(date -d @"$timestamp" "+%d/%m/%Y %H:%M:%S")
 backup_root_dir="$work_dir/$backup_time"
 backup_dockers_dir="$backup_root_dir/dockers"
 
@@ -35,7 +36,8 @@ get_msmtp_email() {
 send_email() {
   local subject="$1"
   local body="$2"
-  local sender_email=$(get_msmtp_email)
+  local sender_email
+  sender_email=$(get_msmtp_email)
 
   {
     echo "Subject: $subject"
@@ -47,7 +49,7 @@ send_email() {
     echo "<hr style='border: none;height: 1px;background-color: #333;'>"
     echo "<h4 style='margin: 0;'>Logs:</h4>"
     echo "<pre style='background-color:#181818; color:#fff; padding:10px; font-family: monospace; white-space: pre-wrap;'>"
-    cat "$log_file" | aha --no-header
+    aha --no-header < "$log_file"
     echo "</pre>"
     echo "</body></html>"
   } | msmtp "$email_to"
@@ -67,17 +69,18 @@ verify_backup() {
     return 1
   fi
 
-  log "Backup verificado com sucesso: $backup_file"
+  log "Backup verificado com sucesso: "${backup_file//$backup_root_dir'/'/}""
 
   return 0
 }
 
 get_gdrive_url() {
   local folder_name="$backup_time"
-  local folder_id=$(rclone lsjson "gdrive:/backups/" --no-mimetype --no-modtime --dirs-only | 
-                   jq -r --arg name "$folder_name" '.[] | select(.Name == $name) | .ID')
-  
-  if [ -n "$folder_id" ]; then
+  local folder_id
+  folder_id=$(rclone lsjson "gdrive:/backups/" --no-mimetype --no-modtime --dirs-only | 
+              jq -r --arg name "$folder_name" '.[] | select(.Name == $name) | .ID')
+
+  if [[ -n "$folder_id" ]]; then
     echo "https://drive.google.com/drive/folders/$folder_id"
   else
     throw "Não foi encontrado encontrado o backups/$backup_time no Google Drive" || true
@@ -88,7 +91,7 @@ get_gdrive_url() {
 trap 'notify_error' ERR
 trap 'cleanup' EXIT
 
-if [ "$EUID" -ne 0 ]; then
+if [[ "$EUID" -ne 0 ]]; then
   throw "Execute como root"
 fi
 
@@ -97,21 +100,27 @@ mkdir -p "$backup_dockers_dir"
 log "Backup id: $backup_time"
 
 for service_path in "$DOCKERS_DIR"/*; do
-  if [[ "$(basename "$service_path")" == "README.md" ]]; then
+  if [[ "${service_path##*/}" == *.md ]]; then
     continue
   fi
 
   service_name=$(basename "$service_path")
   output_file="$backup_dockers_dir/${service_name}.tar.gz.gpg"
-  
+
   log "Processando docker $service_name"
-  
-  tar --preserve-permissions --same-owner -czf - "$service_path" | \
-    gpg --symmetric --cipher-algo AES256 \
-        --passphrase-file "$backup_pass_file" \
-        --batch --yes \
-        -o "$output_file"
-    
+
+  tmp_tar_file="$work_dir/${service_name}.tar.gz"
+  if ! tar --preserve-permissions --same-owner -czf "$tmp_tar_file" "$service_path"; then
+    throw "Falha ao criar o tar de $service_path"
+  fi
+
+  if ! gpg --symmetric --cipher-algo AES256 \
+           --passphrase-file "$backup_pass_file" \
+           --batch --yes \
+           -o "$output_file" "$tmp_tar_file"; then
+    throw "Falha ao criptografar $tmp_tar_file"
+  fi
+
   verify_backup "$output_file"
 
   echo
@@ -125,9 +134,9 @@ echo
 log "Enviando pro Google Drive"
 rclone copy "$backup_root_dir" "gdrive:/backups/$backup_time"
 
-log "Backup concluído"
-
 gdrive_url=$(get_gdrive_url)
+
+log "Backup concluído: $gdrive_url"
 
 send_email "Backup concluído" \
 "<h3 style='margin: 0;margin-bottom: 5px;'>Backup concluído com sucesso.</h3>
