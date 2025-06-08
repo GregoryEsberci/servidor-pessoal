@@ -1,5 +1,13 @@
 #!/bin/bash
 
+env_file=$(realpath "$(dirname "${BASH_SOURCE[0]}")/.env")
+
+if [ -f $env_file ]; then
+    set -a
+    source $env_file
+    set +a
+fi
+
 export PROJECT_ROOT=$(realpath "$(dirname "${BASH_SOURCE[0]}")/..")
 export DOCS_DIR="$PROJECT_ROOT/docs"
 export DOCKERS_DIR="$PROJECT_ROOT/dockers"

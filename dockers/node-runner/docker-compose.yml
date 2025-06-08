@@ -1,0 +1,18 @@
+services:
+  node-runner:
+    build: .
+    user: "${USER_UID:-1000}:${USER_GID:-1000}"
+    working_dir: /app
+    group_add:
+      - ${GID_MIDIAS}
+    volumes:
+      - ./scripts-js:/app/scripts-js:ro
+      - ./scripts:/app/scripts:ro
+      - ./data/configs:/app/configs:ro
+      - /mnt/hdd/:/mnt/hdd
+      - /home/gregory/servidor-pessoal:/home/gregory/servidor-pessoal
+    environment:
+      - SCRIPT_TO_RUN
+      - EXEC_PWD
+    restart: "no"
+    entrypoint: ["/app/scripts/exec_internal.sh"]

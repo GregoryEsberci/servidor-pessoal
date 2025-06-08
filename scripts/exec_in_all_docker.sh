@@ -9,7 +9,7 @@ if [ -z "$COMMAND" ]; then
 fi
 
 if [ ! -d "$DOCKERS_DIR" ]; then
-  throw "Diretório dockers não encontrado em $DOCKERS_DIR"  
+  throw "Diretório dockers não encontrado em $DOCKERS_DIR"
 fi
 
 echo "Diretório base: $(tput bold)$DOCKERS_DIR$(tput sgr0)"
