@@ -11,9 +11,10 @@ Este documento descreve as portas utilizadas por serviços em containers Docker,
 
 | **Serviço**         | **Porta** |
 |---------------------|-----------|
-| Portainer           | 9000      |
+| *~~Portainer~~*     | *~~9000~~*|
 | qBittorrent         | 9001      |
 | Homepage            | 80        |
 | Filebrowser         | 9002      |
 | AdGuard Home        | 9003      |
 | jellyfin            | 9004      |
+| Dozzle              | 9005      |

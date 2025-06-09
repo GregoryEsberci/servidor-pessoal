@@ -1,5 +1,7 @@
 services:
   portainer:
+    profiles:
+      - donotstart
     image: portainer/portainer-ee:latest
     container_name: portainer
     environment:
