@@ -40,9 +40,9 @@ bold=$(tput bold)
 sgr0=$(tput setaf sgr0)
 
 echo
-read -p "Executar ${bold}\"${script}\"${sgr0} com o usuário ${bold}\"${user}\"${sgr0}? (y/N): " resposta
+read -p "Executar ${bold}\"${script}\"${sgr0} com o usuário ${bold}\"${user}\"${sgr0}? (y/N): "
 
-if [[ "${resposta,,}" != "y" ]]; then
+if [[ "${REPLY,,}" != "y" ]]; then
   echo "Cancelado."
   exit 1
 fi

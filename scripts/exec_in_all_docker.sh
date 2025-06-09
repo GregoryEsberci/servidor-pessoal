@@ -17,9 +17,9 @@ echo ""
 echo "Comando a ser executado: $(tput bold)$COMMAND$(tput sgr0)"
 echo ""
 
-read -p "Deseja continuar?? (y/N): " resposta
+read -p "Deseja continuar? (y/N): "
 echo ""
-if [[ "${resposta,,}" != "y" ]]; then
+if [[ "${REPLY,,}" != "y" ]]; then
   echo "Operação cancelada."
   exit 0
 fi

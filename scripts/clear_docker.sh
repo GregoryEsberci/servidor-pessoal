@@ -8,12 +8,10 @@ echo "- Todos os volumes não utilizados"
 echo "- Todo o cache de build"
 
 echo ""
-
-read -p "Deseja continuar? (s/N) " -n 1 -r
-
+read -p "Deseja continuar? (y/N): "
 echo ""
 
-if [[ ! $REPLY =~ ^[Ss]$ ]]; then
+if [[ "${REPLY,,}" != "y" ]]; then
   echo "Operação cancelada."
   exit 0
 fi

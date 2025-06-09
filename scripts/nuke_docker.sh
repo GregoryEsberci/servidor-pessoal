@@ -15,8 +15,8 @@ ESTE SCRIPT VAI REMOVER *TUDO* DO DOCKER:
 ISSO É IRREVERSÍVEL!
 
 EOF
-read -p "Continuar? (Digite EXCLUIR para confirmar): " resposta
-if [[ "$resposta" != "EXCLUIR" ]]; then
+read -p "Continuar? (Digite EXCLUIR para confirmar): "
+if [[ "$REPLY" != "EXCLUIR" ]]; then
     echo "Cancelado. Nada foi apagado."
     exit 1
 fi
