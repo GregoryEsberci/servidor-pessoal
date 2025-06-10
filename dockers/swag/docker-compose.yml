@@ -1,0 +1,28 @@
+services:
+  swag:
+    image: lscr.io/linuxserver/swag:latest
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - URL
+    volumes:
+      - ./data/config:/config
+    networks:
+      - swag-net
+    ports:
+      - "443:443"
+      - "80:80"
+    restart: unless-stopped
+    healthcheck:
+      test: curl -f https://localhost || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  swag-net:
+    external: true
