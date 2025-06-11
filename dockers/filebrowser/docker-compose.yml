@@ -7,6 +7,10 @@ services:
       - /mnt/hdd/public/data:/srv
       - ./data/filebrowser.db:/filebrowser.db
       - ./data/filebrowser.json:/.filebrowser.json
-    ports:
-      - "9002:80"
+    networks:
+      - swag-net
     user: "${PUID}:${PGID}"
+
+networks:
+  swag-net:
+    external: true

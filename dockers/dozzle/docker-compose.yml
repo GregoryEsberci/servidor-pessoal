@@ -9,11 +9,17 @@ services:
       DOZZLE_ENABLE_ACTIONS: true
       DOZZLE_ENABLE_SHELL: true
       DOZZLE_AUTH_PROVIDER: simple
-    ports:
-      - 9005:8080
+      DOZZLE_BASE: /dozzle
+    networks:
+      - swag-net
+    restart: unless-stopped
     healthcheck:
       test: ["CMD", "/dozzle", "healthcheck"]
       interval: 3s
       timeout: 30s
       retries: 5
       start_period: 30s
+
+networks:
+  swag-net:
+    external: true

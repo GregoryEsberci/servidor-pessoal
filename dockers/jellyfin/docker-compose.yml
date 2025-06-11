@@ -3,11 +3,15 @@ services:
     image: jellyfin/jellyfin
     container_name: jellyfin
     user: ${PUID}:${PGID}
-    ports:
-      - 9004:8096
+    networks:
+      - swag-net
     volumes:
       - ./data/config:/config
       - ./data/cache:/cache
       - /mnt/hdd/jellyfin:/media:ro
-      - /mnt/hdd/:/mnt/hdd/ # Precisa mapear o hd pros links simbolicos funcionarem
+      - /mnt/hdd/:/mnt/hdd/ # Precisa mapear o hd pros links simbólicos funcionarem
     restart: 'unless-stopped'
+
+networks:
+  swag-net:
+    external: true

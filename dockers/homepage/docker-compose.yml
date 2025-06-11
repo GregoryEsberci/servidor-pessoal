@@ -2,8 +2,9 @@ services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
-    ports:
-      - 80:3000
+    networks:
+      - swag-net
+    restart: unless-stopped
     volumes:
       - ./data/config:/app/config
       - /mnt/hdd:/mnt/hdd
@@ -11,3 +12,7 @@ services:
     environment:
       - HOMEPAGE_ALLOWED_HOSTS=${HOMEPAGE_ALLOWED_HOSTS}
       - TZ=${TZ}
+
+networks:
+  swag-net:
+    external: true

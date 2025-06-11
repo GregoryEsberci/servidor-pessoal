@@ -5,13 +5,13 @@ services:
     ports:
       - 53:53/tcp
       - 53:53/udp
-      - 9003:80
       # - 9103:3000 # Apenas pra config inicial
     volumes:
       - ./data/adguardhome/config:/opt/adguardhome/conf
       - ./data/adguardhome/work:/opt/adguardhome/work
     networks:
-      dns_network:
+      swag-net:
+      dns-net:
           ipv4_address: 172.28.0.11
 
     restart: unless-stopped
@@ -31,7 +31,7 @@ services:
       - ./data/unbound:/opt/unbound/etc/unbound/
     restart: unless-stopped
     networks:
-      dns_network:
+      dns-net:
         ipv4_address: 172.28.0.10 # usar esse ip no AdGuard
     healthcheck:
       test: drill @localhost www.google.com || exit 1
@@ -41,7 +41,9 @@ services:
       retries: 3
 
 networks:
-  dns_network:
+  swag-net:
+    external: true
+  dns-net:
     driver: bridge
     ipam:
       config:
