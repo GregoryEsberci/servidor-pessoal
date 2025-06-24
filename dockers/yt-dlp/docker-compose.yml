@@ -1,0 +1,9 @@
+services:
+  yt-dlp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /mnt/hdd/public/data/youtube/yt-dlp:/downloads
+    working_dir: /downloads
+    entrypoint: yt-dlp
