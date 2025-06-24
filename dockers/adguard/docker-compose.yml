@@ -1,10 +1,11 @@
 services:
-  adguardhome:
+  adguard:
     image: adguard/adguardhome
     container_name: adguardhome
     ports:
       - 53:53/tcp
       - 53:53/udp
+      - 9666:80
       # - 9103:3000 # Apenas pra config inicial
     volumes:
       - ./data/adguardhome/config:/opt/adguardhome/conf
@@ -12,11 +13,11 @@ services:
     networks:
       swag-net:
       dns-net:
-          ipv4_address: 172.28.0.11
+        ipv4_address: 172.28.0.11
 
     restart: unless-stopped
     depends_on:
-      - adguardhome-unbound
+      - adguard-unbound
     healthcheck:
       test: nslookup www.google.com localhost || exit 1
       timeout: 5s
@@ -24,7 +25,7 @@ services:
       start_period: 10s
       retries: 3
 
-  adguardhome-unbound:
+  adguard-unbound:
     image: mvance/unbound:latest
     container_name: adguardhome-unbound
     volumes:
