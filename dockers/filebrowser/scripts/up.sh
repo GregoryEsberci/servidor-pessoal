@@ -5,33 +5,24 @@ export SERVICE_DIR=$(realpath "$(dirname "${BASH_SOURCE[0]}")/..")
 export PUID=$(id -u midias)
 export PGID=$(id -g midias)
 
-mkdir -p "$SERVICE_DIR/data"
+db_file_path="$SERVICE_DIR/data/database/filebrowser.db"
+settings_file_path="$SERVICE_DIR/data/config/settings.json"
+settings_file_url="https://raw.githubusercontent.com/filebrowser/filebrowser/refs/heads/master/docker/common/defaults/settings.json"
 
-db_file="$SERVICE_DIR/data/filebrowser.db"
-config_file="$SERVICE_DIR/data/filebrowser.json"
+if [ ! -f "$db_file_path" ]; then
+  echo "Criando db file"
 
-if [ ! -f "$db_file" ]; then
-    echo "Criando db file"
-
-    touch "$db_file"
-    sudo chown "$PUID:$PGID" "$db_file"
+  mkdir -p "$(dirname "$db_file_path")"
+  touch "$db_file_path"
+  sudo chown -R "$PUID:$PGID" "$SERVICE_DIR/data"
 fi
 
-if [ ! -f $config_file ]; then
-    echo "Criando config file"
+if [ ! -f $settings_file_path ]; then
+  echo "Baixando config file"
 
-    cat > $config_file <<EOF
-{
-  "port": 80,
-  "baseURL": "",
-  "address": "",
-  "log": "stdout",
-  "database": "/filebrowser.db",
-  "root": "/srv"
-}
-EOF
-
-  sudo chown "$PUID:$PGID" "$config_file"
+  mkdir -p "$(dirname "$settings_file_path")"
+  curl -sL $settings_file_url -o "$config_file"
+  sudo chown -R "$PUID:$PGID" "$SERVICE_DIR/data"
 fi
 
 docker compose -f "$SERVICE_DIR/docker-compose.yml" up -d
