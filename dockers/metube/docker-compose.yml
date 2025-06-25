@@ -13,6 +13,12 @@ services:
       - swag-net
     volumes:
       - /mnt/hdd/public/data/youtube:/downloads
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
 
 networks:
   swag-net:
