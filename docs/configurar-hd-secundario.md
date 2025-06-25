@@ -65,7 +65,7 @@ Editar o arquivo `/etc/fstab`:
 sudo nano /etc/fstab
 ```
 
-Adicionar linha (com UUID correto):
+Adicionar linha lembre-se de alterar UUID, ver `sudo blkid`
 
 ```txt
 UUID=f141a173-9bfe-4826-b1dd-383d9149cc69  /mnt/hdd  ext4  defaults,nofail  0  2
@@ -106,6 +106,3 @@ Saída esperada:
 
 ---
 
-## **Notas Adicionais**
-
-- **UUID**: Sempre use o UUID do seu sistema (ver com `sudo blkid`).

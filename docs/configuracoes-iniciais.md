@@ -46,7 +46,7 @@ sudo dpkg-reconfigure unattended-upgrades
 
 ## Criar usuario "midias"
 
-Ele é usado por alguns conteiners
+Ele é usado por alguns containers
 
 ```sh
 sudo adduser midias

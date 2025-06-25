@@ -13,7 +13,7 @@ hs() {
 # IP
 alias myip='
 echo "IP local: "`hostname -I | cut -d " " -f 1`
-echo "IP remoto: "`curl -s ifconfig.me`'
+echo "IP remoto: "`curl -s https://ifconfig.me`'
 
 # nano
 alias nano-clean='f() { : > "$1" && nano "$1"; }; f'
@@ -23,5 +23,5 @@ alias up="./scripts/up.sh"
 alias down="./scripts/down.sh"
 
 # vscode
-# https://github.com/GregoryEsberci/vscode-file-context-writer/tree/main
+# https://github.com/GregoryEsberci/vscode-file-context-writer
 alias ccd='cd "$(cat "$HOME/.vscode-fcw-active-patch")"'

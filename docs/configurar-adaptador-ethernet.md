@@ -44,7 +44,7 @@ Verifique interfaces com:
 
 Exemplo: interfaces onboard sem cabo `enp3s0`
 
-Edite (ou criar) o arquivo Netplan para configurar a interface automaticamnete:
+Edite (ou criar) o arquivo Netplan para configurar a interface automaticamente:
 
 ```sh
 sudo nano /etc/netplan/01-enx.yaml
@@ -81,6 +81,7 @@ sudo netplan apply
 ```
 
 Reinicie o sistema
+
 ```sh
 sudo reboot
 ```

@@ -15,5 +15,5 @@ HandleLidSwitchExternalPower=ignore
 
 ## O que faz
 
-* `HandleLidSwitch=ignore`: ignora o fechamento da tampa na **bateria**
-* `HandleLidSwitchExternalPower=ignore`: ignora o fechamento da tampa na **tomada**
+* `HandleLidSwitch=ignore`: ignora o fechamento da tampa na bateria
+* `HandleLidSwitchExternalPower=ignore`: ignora o fechamento da tampa na tomada
