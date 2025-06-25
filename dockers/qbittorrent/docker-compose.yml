@@ -10,6 +10,7 @@ services:
     volumes:
       - ./data/qbittorrent/config:/config
       - /mnt/hdd/public/data/torrents:/downloads
+      - ./data/qbittorrent/themes:/themes
     networks:
       - swag-net
     healthcheck:
