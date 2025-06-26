@@ -17,8 +17,8 @@ ISSO É IRREVERSÍVEL!
 EOF
 read -p "Continuar? (Digite EXCLUIR para confirmar): "
 if [[ "$REPLY" != "EXCLUIR" ]]; then
-    echo "Cancelado. Nada foi apagado."
-    exit 1
+  echo "Cancelado. Nada foi apagado."
+  exit 1
 fi
 
 log "Limpando TUDO do Docker..."
