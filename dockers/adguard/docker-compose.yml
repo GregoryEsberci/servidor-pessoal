@@ -20,9 +20,9 @@ services:
       - adguard-unbound
     healthcheck:
       test: nslookup www.google.com localhost || exit 1
-      timeout: 5s
-      interval: 30s
-      start_period: 10s
+      timeout: 15s
+      interval: 60s
+      start_period: 30s
       retries: 3
 
   adguard-unbound:
@@ -36,9 +36,9 @@ services:
         ipv4_address: 172.28.0.10 # usar esse ip no AdGuard
     healthcheck:
       test: drill @localhost www.google.com || exit 1
-      timeout: 5s
-      interval: 30s
-      start_period: 10s
+      timeout: 15s
+      interval: 60s
+      start_period: 30s
       retries: 3
 
 networks:
