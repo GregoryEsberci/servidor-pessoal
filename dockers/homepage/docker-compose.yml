@@ -7,6 +7,8 @@ services:
     restart: unless-stopped
     volumes:
       - ./data/config:/app/config
+      - ./data/icons:/app/public/icons
+      - ./data/images:/app/public/images
       - /mnt/hdd:/mnt/hdd
       - /var/run/docker.sock:/var/run/docker.sock
     environment:

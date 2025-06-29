@@ -1,0 +1,13 @@
+services:
+  docker-status-api:
+    build: .
+    container_name: docker-status-api
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - swag-net
+    restart: unless-stopped
+
+networks:
+  swag-net:
+    external: true
