@@ -6,7 +6,7 @@ const VIDEO_EXTENSIONS = ['.mp4', '.mkv', '.avi', '.mov', '.wmv', '.flv'];
 const SUBTITLE_EXTENSIONS = ['.srt', '.sub', '.ass'];
 const MIN_VIDEO_SIZE = 100 * 1024 * 1024; // 100 MB
 
-const SEARCH_DIR = '/mnt/hdd/public/data/torrents';
+const SEARCH_DIR = '/mnt/hdd/public/data/';
 const targetDir = process.env.EXEC_PWD;
 
 const readline = require('readline').createInterface({
@@ -15,7 +15,7 @@ const readline = require('readline').createInterface({
 });
 
 const ask = (question) =>
-  new Promise((resolve) => readline.question(question, resolve));
+  new Promise((resolve) => readline.question(`\n${question}`, resolve));
 
 const isVideoFile = (filePath) =>
   VIDEO_EXTENSIONS.includes(path.extname(filePath).toLowerCase());
@@ -45,12 +45,21 @@ const readdir = (folder, options = {}) => {
   });
 };
 
-function fileNameSuggestion(fileName, serieName) {
+
+const fileNameSuggestion = ({ fileName, serieName, index, session }) => {
   const ext = path.extname(fileName);
   const nameBase = path.basename(fileName, ext);
-  const episodeCode = extractEpisodeCode(nameBase);
+  let episodeCode = extractEpisodeCode(nameBase);
 
-  return `${serieName} ${episodeCode}${ext}`;
+  if (!episodeCode && typeof session === 'number') {
+    const format = (n) => n.toString().padStart(2, '0')
+
+    episodeCode = `S${format(session)}E${format(index + 1)}`
+  }
+
+  const name = `${serieName} ${episodeCode}`.trim()
+
+  return `${name}${ext}`;
 }
 
 const findFiles = async (dir, searchTerm) => {
@@ -75,6 +84,17 @@ const findFiles = async (dir, searchTerm) => {
     .map(({ file }) => path.resolve(file.path, file.name));
 };
 
+const getSession = async () => {
+  const session = (await ask(`O valor so sera utilizado caso não seja encontrada a temporada no nome do arquivo\nTemporada (opcional): `)).trim();
+
+  if (!Number.isFinite(+session)) {
+    console.log('Valor inválido, insira um número ou deixe o campo vazio.');
+    return getSession();
+  }
+
+  return session ? +session : undefined;
+}
+
 async function main() {
   const searchTerm = (await ask('Buscar por: ')).trim();
 
@@ -83,6 +103,7 @@ async function main() {
   }
 
   const serieName = (await ask(`Pressione enter para usar "${searchTerm}" ou insira um valor\nNome da serie: `)).trim() || searchTerm;
+  const session = await getSession();
 
   const files = await findFiles(SEARCH_DIR, searchTerm);
 
@@ -91,15 +112,16 @@ async function main() {
     return;
   }
 
-  for (const file of files) {
-    const isVideo = isVideoFile(file);
-    const isSubtitle = isSubtitleFile(file);
+  for (let index = 0; index < files.length; index++) {
+    const fileName = files[index];
+    const isVideo = isVideoFile(fileName);
+    const isSubtitle = isSubtitleFile(fileName);
 
     if (!isVideo && !isSubtitle) continue;
-    if (isVideo && !isValidVideo(file)) continue;
+    if (isVideo && !isValidVideo(fileName)) continue;
 
-    const suggestion = fileNameSuggestion(file, serieName);
-    console.log(`\nEncontrado: ${path.basename(file)}\nSugestão:   ${suggestion}`,);
+    const suggestion = fileNameSuggestion({ fileName, serieName, index, session });
+    console.log(`\nEncontrado: ${path.basename(fileName)}\nSugestão:   ${suggestion}`,);
 
     const newName = (await ask('Pressione enter para aceitar a sugestão, digite _next pra ignorar ou insira o nome\nNome: ')).trim() || suggestion;
 
@@ -110,7 +132,7 @@ async function main() {
     if (fs.existsSync(symlinkPath)) {
       console.log(`${symlinkPath} já existe, ignorando`);
     } else {
-      fs.symlinkSync(path.resolve(file), symlinkPath);
+      fs.symlinkSync(path.resolve(fileName), symlinkPath);
       console.log(`Link criado: ${symlinkPath}`);
     }
   }

@@ -12,7 +12,7 @@ services:
     networks:
       - swag-net
     volumes:
-      - /mnt/hdd/public/data/youtube:/downloads
+      - /mnt/hdd/public/data/metube:/downloads
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/"]
       interval: 60s

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-torrents_dir="/mnt/hdd/public/data/torrents"
+source_dir="/mnt/hdd/public/data/"
 jellyfin_dir="/mnt/hdd/jellyfin"
 
 blacklist_extensions=(".url" ".txt" ".jpg" ".png" ".iso")
@@ -15,7 +15,7 @@ cleanup() {
 
 trap 'cleanup' EXIT
 
-find "$torrents_dir" -type f | while read -r file; do
+find "$source_dir" -type f | while read -r file; do
   filename=$(basename "$file")
   extension=".${file##*.}"
   skip_file=0
@@ -41,13 +41,13 @@ done > "$tmp_torrents"
 
 find "$jellyfin_dir" -type l | while read -r link; do
   target=$(readlink -f "$link")
-  if [[ "$target" == "$torrents_dir"* ]]; then
+  if [[ "$target" == "$source_dir"* ]]; then
     echo "$target"
   fi
 done | sort -u > "$tmp_jellyfin_links"
 
 echo "═══════════════════════════════════════════════════════════════════════════════"
-echo "$(tput bold)Arquivos em \"$torrents_dir\" sem links em \"$jellyfin_dir\"$(tput sgr0)"
+echo "$(tput bold)Arquivos em \"$source_dir\" sem links em \"$jellyfin_dir\"$(tput sgr0)"
 echo "═══════════════════════════════════════════════════════════════════════════════"
 echo
 

@@ -1,6 +1,7 @@
 services:
   docker-status-api:
     build: .
+    image: docker-status-api
     container_name: docker-status-api
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
