@@ -5,12 +5,22 @@ services:
     user: ${PUID}:${PGID}
     networks:
       - swag-net
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
     volumes:
       - ./data/config:/config
       - ./data/cache:/cache
-      - /mnt/hdd/jellyfin:/media:ro
+      - /mnt/hdd/jellyfin:/media
       - /mnt/hdd/:/mnt/hdd/ # Precisa mapear o hd pros links simbólicos funcionarem
     restart: 'unless-stopped'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
 networks:
   swag-net:
