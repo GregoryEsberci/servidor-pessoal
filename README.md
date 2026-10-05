@@ -16,6 +16,10 @@ Infraestrutura do meu servidor pessoal. Aqui estão os docker-compose, Dockerfil
   [dockers/filebrowser](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/filebrowser)  
   Gerenciador de arquivos via navegador com autenticação.
 
+- **Flatnotes**  
+  [dockers/flatnotes](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/flatnotes)  
+  Aplicativo de notas em Markdown com interface web e autenticação. As notas ficam salvas como arquivos `.md` simples.
+
 - **Homepage**  
   [dockers/homepage](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/homepage)  
   Dashboard com links e status dos serviços em execução.
