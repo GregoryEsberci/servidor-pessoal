@@ -9,7 +9,10 @@ services:
       - TZ=${TZ}
     volumes:
       - ./data/qbittorrent/config:/config
-      - /mnt/hdd/public/data/torrents:/downloads
+
+      - /mnt/hdd/public/data/torrents:/mnt/hdd/public/data/torrents
+      - /mnt/hdd2/torrents:/mnt/hdd2/torrents
+
       - ./data/qbittorrent/themes:/themes
     networks:
       - swag-net

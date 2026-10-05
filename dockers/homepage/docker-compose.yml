@@ -10,6 +10,7 @@ services:
       - ./data/icons:/app/public/icons
       - ./data/images:/app/public/images
       - /mnt/hdd:/mnt/hdd
+      - /mnt/hdd2:/mnt/hdd2
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - HOMEPAGE_ALLOWED_HOSTS=${HOMEPAGE_ALLOWED_HOSTS}
