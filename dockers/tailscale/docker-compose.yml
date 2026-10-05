@@ -13,6 +13,7 @@ services:
     environment:
       - TS_AUTHKEY=${TS_AUTHKEY}
       - TS_STATE_DIR=/var/lib/tailscale
+      - TS_EXTRA_ARGS=--advertise-exit-node
       - TS_ENABLE_HEALTH_CHECK=true
     restart: unless-stopped
     healthcheck:
