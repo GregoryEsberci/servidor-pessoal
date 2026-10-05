@@ -2,12 +2,14 @@
 
 service_dir=$(realpath "$(dirname "${BASH_SOURCE[0]}")/..")
 script="$1"
-user="${2:-$(id -nu)}" # $2 || usuário atual (id -nu)
+shift
+
+user="${user:-$(id -nu)}"
 
 print_scripts() {
   echo
   echo "Scripts disponíveis:"
-  find "$service_dir/scripts-js/" -maxdepth 1 -mindepth 1 -type d -printf '%f\n'
+  find "$service_dir/scripts-js/" -maxdepth 1 -mindepth 1 -type d -printf '  - %f\n'
 }
 
 if [ -z "$script" ]; then
@@ -25,10 +27,8 @@ if [ ! -d "$SCRIPT_DIR" ]; then
   exit 1
 fi
 
-export SCRIPT_TO_RUN=$script
-export USER_UID=$(id $user -u)
-export USER_GID=$(id $user -g)
-export GID_MIDIAS=$(id -g midias)
 export EXEC_PWD=$PWD
 
-docker compose -f "$service_dir/docker-compose.yml" run --rm node-runner --build
+ENTRYPOINT=$(printf '%q ' "yarn" "--cwd" "scripts-js" "start" "$script/index" "$@")
+
+make -C "$service_dir" run ENTRYPOINT="${ENTRYPOINT}" user="${user}"

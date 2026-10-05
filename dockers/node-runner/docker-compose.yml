@@ -1,18 +1,35 @@
+x-node-runner-base: &node-runner-base
+  build: .
+  user: "${PUID}:${PGID}"
+  working_dir: /home/gregory/servidor-pessoal/dockers/node-runner
+  env_file:
+    - .env
+  group_add:
+    - ${GID_MIDIAS}
+  volumes:
+    - /mnt/hdd/:/mnt/hdd
+    - /mnt/hdd2/:/mnt/hdd2
+    - /home/gregory/servidor-pessoal:/home/gregory/servidor-pessoal
+  networks:
+    - swag-net
+
 services:
   node-runner:
-    build: .
-    user: "${USER_UID:-1000}:${USER_GID:-1000}"
-    working_dir: /app
-    group_add:
-      - ${GID_MIDIAS}
-    volumes:
-      - ./scripts-js:/app/scripts-js:ro
-      - ./scripts:/app/scripts:ro
-      - ./data/configs:/app/configs:ro
-      - /mnt/hdd/:/mnt/hdd
-      - /home/gregory/servidor-pessoal:/home/gregory/servidor-pessoal
+    <<: *node-runner-base
     environment:
       - SCRIPT_TO_RUN
       - EXEC_PWD
     restart: "no"
-    entrypoint: ["/app/scripts/exec_internal.sh"]
+
+  node-runner-api:
+    <<: *node-runner-base
+    container_name: node-runner-api
+    user: "${UID_MIDIAS}:${GID_MIDIAS}"
+    environment:
+      - PORT=8080
+    restart: unless-stopped
+    entrypoint: ["/home/gregory/servidor-pessoal/dockers/node-runner/scripts/serve.sh"]
+
+networks:
+  swag-net:
+    external: true

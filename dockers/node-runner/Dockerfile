@@ -1,4 +1,4 @@
-FROM node:22-slim
+FROM node:24-slim
 
 # && apt install -y gpg rclone msmtp \
 RUN apt update \
