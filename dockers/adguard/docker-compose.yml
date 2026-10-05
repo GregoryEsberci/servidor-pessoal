@@ -15,7 +15,7 @@ services:
       dns-net:
         ipv4_address: 172.28.0.11
 
-    restart: unless-stopped
+    restart: "no"
     depends_on:
       - adguard-unbound
     healthcheck:
@@ -30,16 +30,17 @@ services:
     container_name: adguardhome-unbound
     volumes:
       - ./data/unbound:/opt/unbound/etc/unbound/
-    restart: unless-stopped
-    networks:
-      dns-net:
-        ipv4_address: 172.28.0.10 # usar esse ip no AdGuard
+    restart: "no"
+    # TODO: Já tem, pode ser removido
     healthcheck:
-      test: drill @localhost www.google.com || exit 1
+      test: ls || exit 1
       timeout: 15s
       interval: 60s
       start_period: 30s
       retries: 3
+    # networks:
+    #   dns-net:
+    #     ipv4_address: 172.28.0.10 # usar esse ip no AdGuard
 
 networks:
   swag-net:

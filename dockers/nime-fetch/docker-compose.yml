@@ -2,7 +2,7 @@ services:
   nime-fetch:
     image: gregoryesberci/nime-fetch:latest
     container_name: nime-fetch
-    restart: unless-stopped
+    restart: "no"
     user: "${PUID:-1000}:${PGID:-1000}"
     networks:
       - swag-net
