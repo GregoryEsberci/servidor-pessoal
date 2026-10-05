@@ -1,0 +1,22 @@
+
+services:
+  psitransfer:
+    image: psitrax/psitransfer:latest
+    container_name: psitransfer
+    restart: unless-stopped
+
+    user: "${PUID}:${PGID}"
+
+    environment:
+      PSITRANSFER_BASE_URL: /psitransfer/
+      PSITRANSFER_ADMIN_PASS: ${PSITRANSFER_ADMIN_PASS}
+
+    volumes:
+      - /mnt/hdd/psitransfer:/data
+
+    networks:
+      - swag-net
+
+networks:
+  swag-net:
+    external: true

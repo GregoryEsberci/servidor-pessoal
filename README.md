@@ -36,6 +36,10 @@ Infraestrutura do meu servidor pessoal. Aqui estão os docker-compose, Dockerfil
   [dockers/node-runner](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/node-runner)  
   Container efêmero para execução de scripts Node.js.
 
+- **PsiTransfer**  
+  [dockers/psitransfer](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/psitransfer)  
+  Compartilhamento de arquivos via navegador, com upload e download por link e suporte a senha e expiração.
+
 - **Python Runner**  
   [dockers/py-runner](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/py-runner)  
   Container efêmero para execução de scripts Python.
