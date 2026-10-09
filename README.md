@@ -12,10 +12,6 @@ Infraestrutura do meu servidor pessoal. Aqui estão os docker-compose, Dockerfil
   [dockers/dozzle](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/dozzle)  
   Visualização de logs dos containers em tempo real e gerenciamento básico dos containers via interface web.
 
-- **FileBrowser**  
-  [dockers/filebrowser](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/filebrowser)  
-  Gerenciador de arquivos via navegador com autenticação.
-
 - **Flatnotes**  
   [dockers/flatnotes](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/flatnotes)  
   Aplicativo de notas em Markdown com interface web e autenticação. As notas ficam salvas como arquivos `.md` simples.
@@ -55,10 +51,6 @@ Infraestrutura do meu servidor pessoal. Aqui estão os docker-compose, Dockerfil
 - **Tailscale**  
   [dockers/tailscale](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/tailscale)  
   VPN mesh baseada em WireGuard. Conecta dispositivos mesmo com NAT.
-
-- **Watchtower**  
-  [dockers/watchtower](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/watchtower)  
-  Atualização automática dos containers Docker.
 
 - **yt-dlp**  
   [dockers/yt-dlp](https://github.com/GregoryEsberci/servidor-pessoal/tree/main/dockers/yt-dlp)  
