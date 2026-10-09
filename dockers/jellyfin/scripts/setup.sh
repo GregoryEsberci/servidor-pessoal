@@ -10,8 +10,6 @@ if [ ! -d "$data_folder" ]; then
   echo "Criando estrutura das pastas"
 
   mkdir -p "$data_folder/config" "$data_folder/cache"
-  
+
   sudo chown -R "$PUID:$PGID" "$data_folder"
 fi
-
-docker compose -f "$SERVICE_DIR/docker-compose.yml" up -d
